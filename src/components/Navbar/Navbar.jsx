@@ -4,12 +4,16 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faChevronDown, faPlus, faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { faHeart } from "@fortawesome/free-regular-svg-icons";
 import UserProfileDropdown from "../userProfile/userProfile";
+import { useNavigate } from "react-router-dom";
 
 const Navbar = ({ openAuthModal, user }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
+  const navigateAddProduct =()=>{
+    navigate('/addProduct')
+  }
   return (
     <nav className="flex items-center justify-between px-4 md:px-6 py-2 bg-gray-100 shadow-md relative">
-      {/* Left Section - Logo & Location Input */}
       <div className="flex items-center gap-4">
         <img src={logo} alt="Logo" className="h-8" />
         <div className="hidden md:flex items-center border-2 border-black px-4 py-2 rounded-md gap-2 bg-white">
@@ -18,8 +22,6 @@ const Navbar = ({ openAuthModal, user }) => {
           <FontAwesomeIcon icon={faChevronDown} className="text-gray-500" />
         </div>
       </div>
-
-      {/* Search Bar - Desktop */}
       <div className="hidden md:flex flex-grow max-w-full mx-4 border-2 border-black rounded-md overflow-hidden bg-white">
         <input type="text" placeholder='Search "Bikes"' className="w-full px-4 py-2 outline-none text-sm" />
         <button className="bg-[#002f34] px-4 py-2 text-white">
@@ -27,7 +29,6 @@ const Navbar = ({ openAuthModal, user }) => {
         </button>
       </div>
 
-      {/* Right Section - Desktop */}
       <div className="hidden md:flex items-center gap-6">
         <div className="flex items-center gap-1 cursor-pointer text-sm">
           <p className="text-gray-700 font-bold">ENGLISH</p>
@@ -41,7 +42,7 @@ const Navbar = ({ openAuthModal, user }) => {
             Login
           </p>
         )}
-        <button className="flex items-center gap-2 px-1 py-1 font-semibold rounded-full border-2 border-transparent bg-white relative">
+        <button onClick={()=>navigateAddProduct()} className="flex items-center gap-2 px-1 py-1 font-semibold rounded-full border-2 border-transparent bg-white relative cursor-pointer">
           <span className="absolute inset-0 rounded-full p-[1px] bg-gradient-to-r from-yellow-400 via-teal-400 to-blue-500"></span>
           <span className="relative flex items-center gap-2 bg-white px-4 py-1 rounded-full">
             <FontAwesomeIcon icon={faPlus} />
@@ -49,8 +50,6 @@ const Navbar = ({ openAuthModal, user }) => {
           </span>
         </button>
       </div>
-
-      {/* Mobile Menu Button */}
       <button
         className="md:hidden text-xl text-gray-700"
         onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -59,7 +58,6 @@ const Navbar = ({ openAuthModal, user }) => {
         <FontAwesomeIcon icon={mobileMenuOpen ? faTimes : faBars} />
       </button>
 
-      {/* Mobile Menu */}
       {mobileMenuOpen && (
         <div className="absolute top-14 left-0 w-full bg-gray-100 shadow-md md:hidden flex flex-col items-center py-4 gap-4 z-50">
           {/* Location Input */}
@@ -69,23 +67,18 @@ const Navbar = ({ openAuthModal, user }) => {
             <FontAwesomeIcon icon={faChevronDown} className="text-gray-500" />
           </div>
 
-          {/* Language & Favorites */}
           <div className="flex items-center gap-4">
             <p className="text-gray-700 font-medium cursor-pointer">ENGLISH</p>
             <FontAwesomeIcon icon={faHeart} className="text-gray-600 text-lg cursor-pointer" />
             {user ? (
-              <div className="h-8 w-8 bg-pink-500 text-white flex items-center justify-center rounded-full text-sm font-bold">
-                {user.initial}
-              </div>
-            ) : (
-              <p className="text-gray-700 font-medium cursor-pointer underline" onClick={() => openAuthModal("login")}>
-                Login
-              </p>
-            )}
+          <UserProfileDropdown user={user} openAuthModal={openAuthModal} />
+        ) : (
+          <p className="text-gray-700 font-medium cursor-pointer underline" onClick={() => openAuthModal("login")}>
+            Login
+          </p>
+        )}
           </div>
-
-          {/* Sell Button */}
-          <button className="flex items-center gap-2 px-4 py-2 font-semibold border border-gray-300 bg-white rounded-md">
+          <button onClick={()=>navigateAddProduct()} className="flex items-center gap-2 px-4 py-2 font-semibold cursor-pointer border border-gray-300 bg-white rounded-md">
             <FontAwesomeIcon icon={faPlus} />
             <span>SELL</span>
           </button>

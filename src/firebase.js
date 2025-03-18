@@ -3,6 +3,7 @@ import { initializeApp } from "firebase/app";
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword, signOut ,updateProfile} from "firebase/auth";
 import { addDoc, collection, getFirestore } from "firebase/firestore";
 import { toast } from "react-toastify";
+import { getDatabase, ref, get } from "firebase/database";
 
 const firebaseConfig = {
   apiKey: "AIzaSyAZ0sD6HPh-1qlCWW55fHWvtd7mpJWrSFo",
@@ -16,6 +17,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
 
 const signup = async (name, email, password) => {
   try {
