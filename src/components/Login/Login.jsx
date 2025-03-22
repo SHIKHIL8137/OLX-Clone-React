@@ -1,19 +1,17 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes, faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { auth, db, login, signup, logout  } from "../../firebase"; 
 import { toast } from "react-toastify";
-import Loader from '../Loading/Loader'
+import Loader from '../Loading/Loader';
+import { userDataContext } from '../Context/authContext';
 
 const AuthModal = ({ isOpen, onClose, mode, setMode, onLoginSuccess }) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [name, setName] = useState("");
-  const [loading,setLoding] = useState(false)
-
+  const{name,setEmail,password,setPassword,email,setName,loading,setLoding}=useContext(userDataContext)
+ 
   if (!isOpen) return null;
 
-  // Handle Signup
+
   const handleSignup = async () => {
     try {
       setLoding(true)
@@ -35,7 +33,7 @@ const AuthModal = ({ isOpen, onClose, mode, setMode, onLoginSuccess }) => {
     }
   };
 
-  // Handle Login
+
   const handleLogin = async () => {
     try {
       setLoding(true)
